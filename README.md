@@ -1,2 +1,2 @@
-# yoyo_weather
+# YoYo weather - REST API
 Yoyo Weather API
