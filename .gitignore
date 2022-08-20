@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 #Remove more config repos
-.idea/
+./.idea
+./weatherapi/.my_pgpass
+./weatherapi/.pg_service.conf
+./weatherapi/settings.py
