@@ -130,6 +130,6 @@ dmypy.json
 
 #Remove more config repos
 ./.idea
-./weatherapi/.my_pgpass
-./weatherapi/.pg_service.conf
-./weatherapi/settings.py
+.my_pgpass
+.pg_service.conf
+settings.py
