@@ -1,33 +1,32 @@
+import logging
+
 from django.shortcuts import render
 import json
+import credentials
 import urllib.request
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 
 @csrf_exempt
 def index(request):
     if request.method == 'POST':
         city = request.POST['city']
-        country = request.POST['country']
-        api_key = '5d5cc6bbf903febc2a394ec46d69304d'
+        days = request.POST['days']
 
-        source = urllib.request.urlopen(
-            'https://api.openweathermap.org/data/2.5/weather?q=' + city + ',' + country + '&appid=' + api_key).read()
 
-        # converting JSON data to a dictionary
-        list_of_data = json.loads(source)
+        logging.log(2005, "City " + city + "  Days " + days)
 
-        # data for variable list_of_data
-        data = {
-            "country_code": str(list_of_data['sys']['country']),
-            "coordinate": str(list_of_data['coord']['lon']) + ' '
-                          + str(list_of_data['coord']['lat']),
-            "temp": str(list_of_data['main']['temp']) + 'k',
-            "pressure": str(list_of_data['main']['pressure']),
-            "humidity": str(list_of_data['main']['humidity']),
-        }
-        print(data)
+        base_url = 'https://api.weatherapi.com/v1/forecast.json?key'
+        url = f"{base_url}={credentials.api_key}&q={city}&days={days}"
+
+        logging.log(2005, "url  " + url)
+
+        source = urllib.request.urlopen(url).read()
+
+        weather_data = json.loads(source)
+
     else:
-        data = {}
-    return HttpResponse(json.dumps(list_of_data), content_type="application/json")
+        weather_data = {}
+    return HttpResponse(json.dumps(weather_data), content_type="application/json")
